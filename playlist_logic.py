@@ -116,12 +116,12 @@ def compute_playlist_stats(playlists: PlaylistMap) -> Dict[str, object]:
     chill = playlists.get("Chill", [])
     mixed = playlists.get("Mixed", [])
 
-    total = len(hype)
+    total = len(all_songs)
     hype_ratio = len(hype) / total if total > 0 else 0.0
 
     avg_energy = 0.0
     if all_songs:
-        total_energy = sum(song.get("energy", 0) for song in hype)
+        total_energy = sum(song.get("energy", 0) for song in all_songs)
         avg_energy = total_energy / len(all_songs)
 
     top_artist, top_count = most_common_artist(all_songs)
@@ -192,9 +192,9 @@ def lucky_pick(
 def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
     import random
-
-    return random.choice(songs)
-
+    if songs: 
+        return random.choice(songs)
+    return None
 
 def history_summary(history: List[Song]) -> Dict[str, int]:
     """Return a summary of moods seen in the history."""
